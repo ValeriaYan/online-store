@@ -1,0 +1,10 @@
+@import '../../styles/base/vars';
+
+.nav {
+  display: flex;
+  justify-content: space-evenly;
+
+  a {
+    color: $text-color;
+  }
+}

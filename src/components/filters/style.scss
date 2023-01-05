@@ -4,10 +4,12 @@
 }
 
 .filter {
+  max-height: 20vh;
   padding: 10px;
   border: 1px solid white;
   border-radius: 15px;
   margin-bottom: 15px;
+  overflow-y: auto;
 }
 
 .filter__title {

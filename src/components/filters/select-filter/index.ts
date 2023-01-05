@@ -1,4 +1,5 @@
 import FilterTemplate from '../filter-template';
+import { SelectFiltersType } from '..';
 
 export interface SelectFilterItem {
   id: string;
@@ -9,14 +10,19 @@ export interface SelectFilterItem {
 
 class SelectFilter extends FilterTemplate {
   private list: HTMLElement;
+  private filterId: SelectFiltersType;
 
-  constructor(title: string) {
+  constructor(title: string, filterId: SelectFiltersType) {
     super(title, 'select-filter');
     this.list = document.createElement('ul');
     this.list.className = 'select-filter__list';
+    this.filterId = filterId;
   }
 
-  public update(items: SelectFilterItem[], filterHandler: (event: Event) => void): void {
+  public update(
+    items: SelectFilterItem[],
+    filterHandler: (event: Event, filterId: SelectFiltersType) => void
+  ): void {
     this.list.innerHTML = '';
 
     items.forEach((item) => {
@@ -29,7 +35,7 @@ class SelectFilter extends FilterTemplate {
       checkbox.type = 'checkbox';
       checkbox.id = item.id;
       checkbox.checked = item.isSelected;
-      checkbox.onchange = (event) => filterHandler(event);
+      checkbox.onchange = (event) => filterHandler(event, this.filterId);
 
       const label = document.createElement('label');
       const labelText = document.createElement('span');

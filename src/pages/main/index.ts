@@ -26,9 +26,9 @@ class MainPage {
   }
 
   private updateProductList = (): void => {
-    console.log(this.filters.filteredProducts);
-    const sortedProducts = this.sortProducts.getSortedProducts(this.filters.filteredProducts);
-    this.productsContainer.append(this.productsList.render(sortedProducts));
+    let products = this.filters.getFilteredProducts();
+    products = this.sortProducts.getSortedProducts(products);
+    this.productsContainer.append(this.productsList.render(products));
   };
 
   render(): HTMLElement {

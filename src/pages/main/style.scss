@@ -1,3 +1,11 @@
 .main-page {
   display: flex;
 }
+
+.main-page__filters {
+  flex-shrink: 0;
+}
+
+.main-page__products {
+  flex-grow: 1;
+}

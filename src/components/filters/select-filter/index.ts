@@ -22,7 +22,7 @@ class SelectFilter extends FilterTemplate {
     items.forEach((item) => {
       const listItem = document.createElement('li');
       listItem.className = `select-filter__item ${
-        (item.isSelected && 'select-filter__item_active') || ''
+        item.isSelected ? 'select-filter__item_active' : ''
       }`;
 
       const checkbox = document.createElement('input');

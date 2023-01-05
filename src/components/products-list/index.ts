@@ -1,9 +1,9 @@
 import './style.scss';
 
 import { IProduct } from '../../types';
-import Component from '../component-template';
+import ComponentTemplate from '../component-template';
 
-class ProductsList extends Component {
+class ProductsList extends ComponentTemplate {
   constructor() {
     super('div', 'products-list');
   }
@@ -44,11 +44,6 @@ class ProductsList extends Component {
       productItem.append(productItemInfo);
       this.container.append(productItem);
     });
-  }
-
-  public update(products: IProduct[]): void {
-    this.container.innerHTML = '';
-    this.createProductsList(products);
   }
 
   public render(products: IProduct[]): HTMLElement {

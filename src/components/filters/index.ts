@@ -1,44 +1,44 @@
 import './style.scss';
 
 import { IProduct } from '../../types';
-import Component from '../component-template';
-import SelectFilter, { SelectFilterItem } from './select-filer';
+import ComponentTemplate from '../component-template';
+import SelectFilter, { SelectFilterItem } from './select-filter';
 
 type FiltersType = Extract<keyof IProduct, 'category' | 'brand'>;
 
-class Filters extends Component {
+class Filters extends ComponentTemplate {
   private appliedFilters: Record<FiltersType, Set<string>> = {
     category: new Set(),
     brand: new Set(),
   };
 
   private products: IProduct[];
-  private filteredProducts: IProduct[];
+  public filteredProducts: IProduct[];
   private categoryFilter: SelectFilter;
   private brandFilter: SelectFilter;
-  private renderProductList: (product: IProduct[]) => void;
+  private updateProductList: () => void;
 
-  constructor(products: IProduct[], renderProductList: (product: IProduct[]) => void) {
+  constructor(products: IProduct[], updateProductList: () => void) {
     super('div', 'filters');
 
     this.products = products;
     this.filteredProducts = products;
     this.categoryFilter = new SelectFilter('Category');
     this.brandFilter = new SelectFilter('Brand');
-    this.renderProductList = renderProductList;
+    this.updateProductList = updateProductList;
   }
 
-  private setUrl() {
-    const queryParams = (Object.keys(this.appliedFilters) as Array<FiltersType>)
-      .filter((filterKey) => this.appliedFilters[filterKey].size !== 0)
-      .map((filterKey) => `${filterKey}=${[...this.appliedFilters[filterKey]].join('+')}`)
-      .join('&');
+  private setUrl(filter: FiltersType) {
+    const queryParams = [...this.appliedFilters[filter]].join('↕');
+    console.log(queryParams);
+    const url = new URL(window.location.toString());
 
     if (queryParams) {
-      history.pushState({}, '', `?${queryParams}`);
+      url.searchParams.set(filter, queryParams);
     } else {
-      history.pushState({}, '', window.location.pathname);
+      url.searchParams.delete(filter);
     }
+    window.history.pushState({}, '', url);
   }
 
   private getFilteredProducts() {
@@ -55,10 +55,11 @@ class Filters extends Component {
 
   private setAppliedFilters() {
     const queryParamsString = window.location.search;
+    console.log(queryParamsString);
     if (queryParamsString) {
       const queryParams = new URLSearchParams(queryParamsString);
-      this.appliedFilters.category = new Set(queryParams.get('category')?.split(' '));
-      this.appliedFilters.brand = new Set(queryParams.get('brand')?.split(' '));
+      this.appliedFilters.category = new Set(queryParams.get('category')?.split('↕'));
+      this.appliedFilters.brand = new Set(queryParams.get('brand')?.split('↕'));
       this.filteredProducts = this.getFilteredProducts();
     }
   }
@@ -66,6 +67,7 @@ class Filters extends Component {
   private getSelectItems(filterName: FiltersType): SelectFilterItem[] {
     const filtersMap = this.products.reduce((acc, product) => {
       const itemKey = product[filterName];
+
       let totalQuantity = acc.get(itemKey)?.totalQuantity ?? 0;
       totalQuantity += 1;
 
@@ -84,10 +86,6 @@ class Filters extends Component {
     }, new Map());
 
     return [...filtersMap.values()];
-  }
-
-  private updateProductList(): void {
-    this.renderProductList(this.filteredProducts);
   }
 
   private categoryFilterHandler = (event: Event): void => {
@@ -118,7 +116,7 @@ class Filters extends Component {
     this.filteredProducts = this.getFilteredProducts();
     this.updateProductList();
     this.updateFilters();
-    this.setUrl();
+    this.setUrl(filter);
   }
 
   public render(): HTMLElement {

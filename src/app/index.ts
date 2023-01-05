@@ -33,7 +33,7 @@ class App {
     (async () => {
       if (path === PagePaths.MainPage) {
         const products = await this.dataService.getProducts();
-        page = new MainPage().render(products);
+        page = new MainPage(products).render();
       } else if (path === PagePaths.CartPage) {
         page = new CartPage().render();
       } else if (path === PagePaths.ProductPage) {

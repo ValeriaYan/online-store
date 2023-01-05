@@ -1,15 +1,11 @@
 .products-list {
   flex-grow: 1;
-  padding: 15px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.product-item {
+.products-list__item {
   width: 25%;
-}
-
-.product-item__title {
-  text-align: center;
-  margin: 0;
+  padding: 15px;
+  flex-shrink: 0;
 }

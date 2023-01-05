@@ -1,0 +1,31 @@
+.product-card {
+  padding: 10px;
+  border: solid 1px white;
+  border-radius: 15px;
+}
+
+.product-card__title {
+  text-align: center;
+  margin: 0;
+}
+
+.product-card__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  display: block;
+  padding: 5px;
+  background: white;
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    background: gray;
+  }
+}

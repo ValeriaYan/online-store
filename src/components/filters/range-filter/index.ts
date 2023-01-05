@@ -11,6 +11,7 @@ interface IRange {
 }
 
 class RangeFilter extends FilterTemplate {
+  private prefix: string;
   private filterId: RangeFiltersType;
   private wrapper: HTMLElement;
   private valuesBox: HTMLElement;
@@ -22,12 +23,15 @@ class RangeFilter extends FilterTemplate {
     title: string,
     filterId: RangeFiltersType,
     range: IRange,
-    rangeFilterHandler: RangeCallback
+    rangeFilterHandler: RangeCallback,
+    prefix?: string
   ) {
     super(title, 'range-filter');
 
     this.filterId = filterId;
     this.range = range;
+    this.prefix = prefix ?? '';
+
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'range-filter__wrapper';
     this.valuesBox = document.createElement('div');
@@ -45,10 +49,10 @@ class RangeFilter extends FilterTemplate {
       let numFrom = parseFloat(fromValue);
       let numTo = parseFloat(toValue);
       if (numFrom === numTo) {
-        this.valuesBox.innerText = `$${numFrom}`;
+        this.valuesBox.innerText = `${this.prefix}${numFrom}`;
       } else {
         if (numFrom > numTo) [numTo, numFrom] = [numFrom, numTo];
-        this.valuesBox.innerText = `$${numFrom} - $${numTo}`;
+        this.valuesBox.innerText = `${this.prefix}${numFrom} - ${this.prefix}${numTo}`;
       }
     }
   }

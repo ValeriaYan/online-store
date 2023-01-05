@@ -21,8 +21,9 @@ class Filters extends ComponentTemplate {
   private priceFilter: RangeFilter;
   private stockFilter: RangeFilter;
   private updateProductList: () => void;
+  private getSearchQuery: () => string;
 
-  constructor(products: IProduct[], updateProductList: () => void) {
+  constructor(products: IProduct[], updateProductList: () => void, getSearchQuery: () => string) {
     super('div', 'filters');
 
     this.products = products;
@@ -54,6 +55,7 @@ class Filters extends ComponentTemplate {
     );
 
     this.updateProductList = updateProductList;
+    this.getSearchQuery = getSearchQuery;
   }
 
   private setSelectUrl(filter: SelectFiltersType): void {
@@ -83,6 +85,8 @@ class Filters extends ComponentTemplate {
   }
 
   private filterProducts(): IProduct[] {
+    const searchQuery = this.getSearchQuery();
+    console.log(searchQuery);
     return this.products.filter((product) => {
       return (
         (
@@ -97,7 +101,10 @@ class Filters extends ComponentTemplate {
           const currentFilter = this.appliedFilters.range[filterKey];
           const [from, to] = currentFilter;
           return product[filterKey] >= from && product[filterKey] <= to && isMatch;
-        }, true)
+        }, true) &&
+        (product.title.toLowerCase().includes(searchQuery) ||
+          product.brand.toLowerCase().includes(searchQuery) ||
+          product.category.toLowerCase().includes(searchQuery))
       );
     });
   }
@@ -202,6 +209,12 @@ class Filters extends ComponentTemplate {
 
   public getFilteredProducts(): IProduct[] {
     return this.filteredProducts;
+  }
+
+  public updateAllFilters(): void {
+    this.filteredProducts = this.filterProducts();
+    this.updateSelectFilters();
+    this.updateRangeFilters();
   }
 
   public render(): HTMLElement {

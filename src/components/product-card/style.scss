@@ -13,19 +13,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-.button {
-  display: block;
-  padding: 5px;
-  background: white;
-  color: black;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1;
-  border: none;
-  border-radius: 5px;
-
-  &:hover {
-    background: gray;
-  }
-}

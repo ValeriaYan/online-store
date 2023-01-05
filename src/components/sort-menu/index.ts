@@ -3,30 +3,30 @@ import './style.scss';
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import SortBar from '../sort-bar';
+import SearchBar from '../search-bar';
 
-class SortProducts extends ComponentTemplate {
+class SortMenu extends ComponentTemplate {
   private sortBar: SortBar;
   private foundBar: HTMLElement;
-  // private updateProductList: ()=>void;
+  private searchBar: SearchBar;
 
-  constructor(updateProductList: () => void) {
-    super('div', 'sort-products');
+  constructor(updateProductList: () => void, searchHandler: () => void) {
+    super('div', 'sort-menu');
     this.foundBar = document.createElement('div');
-    // this.updateProductList = updateProductList;
     this.sortBar = new SortBar(updateProductList);
+    this.searchBar = new SearchBar(searchHandler);
   }
 
-  private updateFoundBar(amount: number) {
+  public updateFoundBar(amount: number) {
     this.foundBar.innerText = `Found: ${amount}`;
   }
 
   public getSortedProducts(products: IProduct[]): IProduct[] {
-    this.updateFoundBar(products.length);
     const sortOption = this.sortBar.getCurrentSortOption();
     if (!sortOption) return products;
 
     const [sortBy, sortOrder] = sortOption.split('-');
-    console.log(sortBy, sortOrder);
+
     if (sortBy === 'title') return [...products].sort((a, b) => a.title.localeCompare(b.title));
     if (sortBy !== 'price' && sortBy !== 'rating' && sortBy !== 'discountPercentage')
       return products;
@@ -35,11 +35,28 @@ class SortProducts extends ComponentTemplate {
     return products;
   }
 
+  public getFoundProducts(products: IProduct[]): IProduct[] {
+    const searchQuery = this.searchBar.getSearchQuery().toLowerCase();
+    if (!searchQuery) return products;
+    console.log;
+    return products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchQuery) ||
+        product.brand.toLowerCase().includes(searchQuery) ||
+        product.category.toLowerCase().includes(searchQuery)
+    );
+  }
+
+  public getSearchQuery = (): string => {
+    return this.searchBar.getSearchQuery().toLowerCase();
+  };
+
   public render() {
     this.container.append(this.sortBar.render());
     this.container.append(this.foundBar);
+    this.container.append(this.searchBar.render());
     return this.container;
   }
 }
 
-export default SortProducts;
+export default SortMenu;

@@ -4,8 +4,16 @@
 
 .main-page__filters {
   flex-shrink: 0;
+  padding-right: 15px;
 }
 
 .main-page__products {
   flex-grow: 1;
+}
+
+.reset-filters {
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
 }

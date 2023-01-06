@@ -18,19 +18,22 @@ class RangeFilter extends FilterTemplate {
   private range: IRange;
   private slider1: HTMLInputElement;
   private slider2: HTMLInputElement;
+  private fixedPoint: number;
 
   constructor(
     title: string,
     filterId: RangeFiltersType,
     range: IRange,
     rangeFilterHandler: RangeCallback,
-    prefix?: string
+    prefix?: string,
+    fixedPoint?: number
   ) {
     super(title, 'range-filter');
 
     this.filterId = filterId;
     this.range = range;
     this.prefix = prefix ?? '';
+    this.fixedPoint = fixedPoint ?? 0;
 
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'range-filter__wrapper';
@@ -46,8 +49,8 @@ class RangeFilter extends FilterTemplate {
     if (!fromValue || !toValue) {
       this.valuesBox.innerText = 'Not found';
     } else {
-      let numFrom = parseFloat(fromValue);
-      let numTo = parseFloat(toValue);
+      let numFrom = parseFloat(fromValue).toFixed(this.fixedPoint);
+      let numTo = parseFloat(toValue).toFixed(this.fixedPoint);
       if (numFrom === numTo) {
         this.valuesBox.innerText = `${this.prefix}${numFrom}`;
       } else {

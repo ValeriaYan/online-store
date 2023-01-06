@@ -40,7 +40,8 @@ class Filters extends ComponentTemplate {
         max: Math.max(...prices),
       },
       this.rangeFilterHandler,
-      '$'
+      '$',
+      2
     );
 
     const stocks = this.products.map((product) => product.stock);

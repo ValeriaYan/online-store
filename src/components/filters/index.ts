@@ -58,8 +58,7 @@ class Filters extends ComponentTemplate {
     this.getSearchQuery = getSearchQuery;
   }
 
-  private setSelectUrl(filter: SelectFiltersType): void {
-    const queryParams = [...this.appliedFilters.select[filter]].join('↕');
+  private setUrl(queryParams: string, filter: string) {
     const url = new URL(window.location.toString());
 
     if (queryParams) {
@@ -69,24 +68,21 @@ class Filters extends ComponentTemplate {
     }
 
     window.history.pushState({}, '', url);
+  }
+
+  private setSelectUrl(filter: SelectFiltersType): void {
+    const queryParams = [...this.appliedFilters.select[filter]].join('↕');
+    this.setUrl(queryParams, filter);
   }
 
   private setRangeUrl(filter: RangeFiltersType): void {
     const queryParams = this.appliedFilters.range[filter].join('↕');
-    const url = new URL(window.location.toString());
-
-    if (queryParams) {
-      url.searchParams.set(filter, queryParams);
-    } else {
-      url.searchParams.delete(filter);
-    }
-
-    window.history.pushState({}, '', url);
+    this.setUrl(queryParams, filter);
   }
 
   private filterProducts(): IProduct[] {
     const searchQuery = this.getSearchQuery();
-    console.log(searchQuery);
+
     return this.products.filter((product) => {
       return (
         (
@@ -111,7 +107,6 @@ class Filters extends ComponentTemplate {
 
   private setAppliedFilters() {
     const queryParamsString = window.location.search;
-    console.log(queryParamsString);
     if (queryParamsString) {
       const queryParams = new URLSearchParams(queryParamsString);
       this.appliedFilters.select.category = new Set(queryParams.get('category')?.split('↕'));
@@ -126,8 +121,6 @@ class Filters extends ComponentTemplate {
         .get('stock')
         ?.split('↕')
         .map((it) => Number(it)) ?? [0, Infinity];
-
-      console.log(this.appliedFilters);
 
       this.filteredProducts = this.filterProducts();
     }
@@ -193,7 +186,6 @@ class Filters extends ComponentTemplate {
   }
 
   private rangeFilterHandler = (from: string, to: string, filterId: RangeFiltersType): void => {
-    console.log(filterId);
     this.appliedFilters.range[filterId] = [
       Math.min(Number(from), Number(to)),
       Math.max(Number(from), Number(to)),
@@ -213,6 +205,16 @@ class Filters extends ComponentTemplate {
 
   public updateAllFilters(): void {
     this.filteredProducts = this.filterProducts();
+    this.updateSelectFilters();
+    this.updateRangeFilters();
+  }
+
+  public reset() {
+    this.filteredProducts = this.products;
+    this.appliedFilters = {
+      select: { category: new Set(), brand: new Set() },
+      range: { price: [0, Infinity], stock: [0, Infinity] },
+    };
     this.updateSelectFilters();
     this.updateRangeFilters();
   }

@@ -38,7 +38,6 @@ class SortMenu extends ComponentTemplate {
   public getFoundProducts(products: IProduct[]): IProduct[] {
     const searchQuery = this.searchBar.getSearchQuery().toLowerCase();
     if (!searchQuery) return products;
-    console.log;
     return products.filter(
       (product) =>
         product.title.toLowerCase().includes(searchQuery) ||
@@ -50,6 +49,11 @@ class SortMenu extends ComponentTemplate {
   public getSearchQuery = (): string => {
     return this.searchBar.getSearchQuery().toLowerCase();
   };
+
+  public reset() {
+    this.sortBar.reset();
+    this.searchBar.reset();
+  }
 
   public render() {
     this.container.append(this.sortBar.render());

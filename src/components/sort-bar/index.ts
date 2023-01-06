@@ -2,6 +2,7 @@ import ComponentTemplate from '../component-template';
 
 class SortBar extends ComponentTemplate {
   private sortOptions = {
+    title: 'Sort by title',
     'price-ASC': 'Sort by price ASC',
     'price-DESC': 'Sort by price DESC',
     'rating-ASC': 'Sort by rating ASC',
@@ -11,11 +12,13 @@ class SortBar extends ComponentTemplate {
   };
 
   private currentSortOption: string;
+  private sortSelect: HTMLSelectElement;
   private updateProductList: () => void;
 
   constructor(updateProductList: () => void) {
     super('div', 'sort-bar');
     this.currentSortOption = '';
+    this.sortSelect = this.createSortSelect();
     this.updateProductList = updateProductList;
   }
 
@@ -41,12 +44,13 @@ class SortBar extends ComponentTemplate {
     }
   }
 
-  private createSortSelect(): HTMLElement {
+  private createSortSelect(): HTMLSelectElement {
     const select = document.createElement('select');
     const optionsTitle = document.createElement('option');
     optionsTitle.textContent = 'Sort options:';
     optionsTitle.selected = true;
     optionsTitle.disabled = true;
+    optionsTitle.value = '';
 
     select.append(optionsTitle);
 
@@ -67,9 +71,14 @@ class SortBar extends ComponentTemplate {
     return this.currentSortOption;
   }
 
+  public reset(): void {
+    this.currentSortOption = '';
+    this.sortSelect.value = '';
+  }
+
   public render(): HTMLElement {
     this.setCurrentSortOption();
-    this.container.append(this.createSortSelect());
+    this.container.append(this.sortSelect);
     return this.container;
   }
 }

@@ -4,11 +4,13 @@ import Filters from '../../components/filters';
 import ProductsList from '../../components/products-list';
 import { IProduct } from '../../types';
 import SortMenu from '../../components/sort-menu';
+import ResetFilters from '../../components/reset-filters';
 
 class MainPage {
   private filters: Filters;
-  private productsList: ProductsList;
   private sortMenu: SortMenu;
+  private resetFilters: ResetFilters;
+  private productsList: ProductsList;
   private container: HTMLElement;
   private filtersContainer: HTMLElement;
   private productsContainer: HTMLElement;
@@ -23,6 +25,7 @@ class MainPage {
     this.productsList = new ProductsList();
     this.sortMenu = new SortMenu(this.updateProductList, this.searchHandler);
     this.filters = new Filters(products, this.updateProductList, this.sortMenu.getSearchQuery);
+    this.resetFilters = new ResetFilters(this.resetFiltersHandler);
   }
 
   private searchHandler = () => {
@@ -37,43 +40,16 @@ class MainPage {
     this.productsContainer.append(this.productsList.render(products));
   };
 
-  private createFilterControls(): HTMLElement {
-    const resetFilters = document.createElement('div');
-    resetFilters.className = 'reset-filters';
-
-    const resetFiltersButton = document.createElement('button');
-    resetFiltersButton.className = 'button';
-    resetFiltersButton.innerText = 'Reset Filters';
-
-    const copyLinkButton = document.createElement('button');
-    copyLinkButton.className = 'button';
-    copyLinkButton.innerText = 'Copy Link';
-
-    resetFiltersButton.onclick = () => {
-      // this.render();
-      // window.history.pushState({}, '', '/');
-    };
-
-    copyLinkButton.onclick = () => {
-      const prevText = copyLinkButton.innerText;
-      navigator.clipboard.writeText(window.location.href);
-      copyLinkButton.innerText = 'Copied !';
-      copyLinkButton.disabled = true;
-      setTimeout(() => {
-        copyLinkButton.innerText = prevText;
-        copyLinkButton.disabled = false;
-      }, 1000);
-    };
-
-    resetFilters.append(resetFiltersButton);
-    resetFilters.append(copyLinkButton);
-
-    return resetFilters;
-  }
+  private resetFiltersHandler = (): void => {
+    window.history.pushState({}, '', window.location.pathname);
+    this.filters.reset();
+    this.sortMenu.reset();
+    this.updateProductList();
+  };
 
   public render(): HTMLElement {
     this.container.innerHTML = '';
-    this.filtersContainer.append(this.createFilterControls());
+    this.filtersContainer.append(this.resetFilters.render());
     this.container.append(this.filtersContainer);
     this.container.append(this.productsContainer);
     this.productsContainer.append(this.sortMenu.render());

@@ -50,6 +50,11 @@ class SearchBar extends ComponentTemplate {
     return this.searchQuery;
   };
 
+  public reset(): void {
+    this.searchQuery = '';
+    this.searchInput.value = '';
+  }
+
   public render(): HTMLElement {
     this.setSearchQuery();
     return this.container;

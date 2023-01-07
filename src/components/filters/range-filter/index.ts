@@ -49,13 +49,16 @@ class RangeFilter extends FilterTemplate {
     if (!fromValue || !toValue) {
       this.valuesBox.innerText = 'Not found';
     } else {
-      let numFrom = parseFloat(fromValue).toFixed(this.fixedPoint);
-      let numTo = parseFloat(toValue).toFixed(this.fixedPoint);
+      let numFrom = parseFloat(fromValue);
+      let numTo = parseFloat(toValue);
+
       if (numFrom === numTo) {
-        this.valuesBox.innerText = `${this.prefix}${numFrom}`;
+        this.valuesBox.innerText = `${this.prefix}${numFrom.toFixed(this.fixedPoint)}`;
       } else {
         if (numFrom > numTo) [numTo, numFrom] = [numFrom, numTo];
-        this.valuesBox.innerText = `${this.prefix}${numFrom} - ${this.prefix}${numTo}`;
+        const from = `${this.prefix}${numFrom.toFixed(this.fixedPoint)}`;
+        const to = `${this.prefix}${numTo.toFixed(this.fixedPoint)}`;
+        this.valuesBox.innerText = `${from} ⟷ ${to}`;
       }
     }
   }

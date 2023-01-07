@@ -2,6 +2,7 @@ import './style.scss';
 
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
+import clickLinkHandler from '../../utils/click-link-handler';
 
 class ProductCard extends ComponentTemplate {
   private cardId: number;
@@ -51,6 +52,7 @@ class ProductCard extends ComponentTemplate {
     addToCartButton.className = 'button';
     addToCartButton.innerText = 'ADD TO CART';
 
+    detailsButton.onclick = clickLinkHandler;
     addToCartButton.onclick = () => console.log(`Add to card ProductId: ${this.cardId}`);
 
     productButtonsBox.append(addToCartButton);

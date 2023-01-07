@@ -1,0 +1,41 @@
+.range-filter__values {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.range-filter__wrapper {
+  position: relative;
+  height: 35px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.range-filter__wrapper input {
+  pointer-events: none;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  width: 100%;
+  outline: none;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.range-filter__wrapper input::-webkit-slider-thumb {
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+  outline: 0;
+}
+
+.range-filter__wrapper input::-moz-range-thumb {
+  pointer-events: all;
+  position: relative;
+  z-index: 10;
+  -moz-appearance: none;
+  width: 9px;
+}

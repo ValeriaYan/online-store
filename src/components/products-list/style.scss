@@ -1,0 +1,19 @@
+.products-list {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.products-list__item {
+  width: 25%;
+  min-width: 266px;
+  padding: 15px;
+  flex-shrink: 0;
+}
+
+.products-list__no-found-message {
+  margin: 30px;
+  justify-self: center;
+  font-size: 3rem;
+}

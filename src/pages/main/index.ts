@@ -1,22 +1,59 @@
+import './style.scss';
+
+import Filters from '../../components/filters';
+import ProductsList from '../../components/products-list';
+import { IProduct } from '../../types';
+import SortMenu from '../../components/sort-menu';
+import ResetFilters from '../../components/reset-filters';
+
 class MainPage {
+  private filters: Filters;
+  private sortMenu: SortMenu;
+  private resetFilters: ResetFilters;
+  private productsList: ProductsList;
   private container: HTMLElement;
-  static TextObject = {
-    MainTitle: 'Main Page',
+  private filtersContainer: HTMLElement;
+  private productsContainer: HTMLElement;
+
+  constructor(products: IProduct[]) {
+    this.container = document.createElement('div');
+    this.container.className = 'main-page';
+    this.filtersContainer = document.createElement('div');
+    this.filtersContainer.className = 'main-page__filters';
+    this.productsContainer = document.createElement('div');
+    this.productsContainer.className = 'main-page__products';
+    this.productsList = new ProductsList();
+    this.sortMenu = new SortMenu(this.updateProductList, this.searchHandler);
+    this.filters = new Filters(products, this.updateProductList, this.sortMenu.getSearchQuery);
+    this.resetFilters = new ResetFilters(this.resetFiltersHandler);
+  }
+
+  private searchHandler = () => {
+    this.filters.updateAllFilters();
+    this.updateProductList();
   };
 
-  constructor() {
-    this.container = document.createElement('div');
-  }
+  private updateProductList = (): void => {
+    let products = this.filters.getFilteredProducts();
+    products = this.sortMenu.getSortedProducts(products);
+    this.sortMenu.updateFoundBar(products.length);
+    this.productsContainer.append(this.productsList.render(products));
+  };
 
-  private createHeaderTitle(text: string): HTMLElement {
-    const headerTitle = document.createElement('h1');
-    headerTitle.innerText = text;
-    return headerTitle;
-  }
+  private resetFiltersHandler = (): void => {
+    window.history.pushState({}, '', window.location.pathname);
+    this.filters.reset();
+    this.sortMenu.reset();
+    this.updateProductList();
+  };
 
-  render(): HTMLElement {
-    const title = this.createHeaderTitle(MainPage.TextObject.MainTitle);
-    this.container.append(title);
+  public render(): HTMLElement {
+    this.container.innerHTML = '';
+    this.filtersContainer.append(this.resetFilters.render());
+    this.container.append(this.filtersContainer);
+    this.container.append(this.productsContainer);
+    this.productsContainer.append(this.sortMenu.render());
+    this.filtersContainer.append(this.filters.render());
     return this.container;
   }
 }

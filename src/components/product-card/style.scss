@@ -1,0 +1,15 @@
+.product-card {
+  padding: 10px;
+  border: solid 1px white;
+  border-radius: 15px;
+}
+
+.product-card__title {
+  text-align: center;
+  margin: 0;
+}
+
+.product-card__buttons {
+  display: flex;
+  justify-content: space-between;
+}

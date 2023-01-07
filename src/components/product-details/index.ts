@@ -15,7 +15,7 @@ class ProductDetails extends ComponentTemplate {
   private createGallery(): HTMLElement {
     const galleryContainer = document.createElement('div');
     galleryContainer.className = 'product-details__gallery';
-    const gallery = new ProductGallery(this.product.images);
+    const gallery = new ProductGallery(this.product.images, this.product.title);
     galleryContainer.append(gallery.render());
     return galleryContainer;
   }

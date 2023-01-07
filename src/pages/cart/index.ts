@@ -1,22 +1,24 @@
+import CartProducts from '../../components/cart-products'
+import Cart from '../../model/cart';
+
 class CartPage {
   private container: HTMLElement;
-  static TextObject = {
-    MainTitle: 'Cart Page',
-  };
+  private cart: Cart;
 
-  constructor() {
+  constructor(cart: Cart) {
     this.container = document.createElement('div');
+    this.cart = cart;
   }
-
+  
   private createHeaderTitle(text: string): HTMLElement {
     const headerTitle = document.createElement('h1');
     headerTitle.innerText = text;
     return headerTitle;
   }
-
+  
   render(): HTMLElement {
-    const title = this.createHeaderTitle(CartPage.TextObject.MainTitle);
-    this.container.append(title);
+    const cartProducts = new CartProducts(this.cart);
+    this.container.append(cartProducts.render());
     return this.container;
   }
 }

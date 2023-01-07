@@ -1,4 +1,5 @@
 import Header from '../components/header';
+import Cart from '../model/cart';
 import CartPage from '../pages/cart';
 import ErrorPage from '../pages/error';
 import MainPage from '../pages/main';
@@ -16,6 +17,7 @@ class App {
   private content: HTMLElement;
   private header: Header;
   private dataService: DataService;
+  private cart: Cart;
 
   constructor() {
     this.container = document.createElement('div');
@@ -23,6 +25,7 @@ class App {
     this.content = document.createElement('main');
     this.header = new Header();
     this.dataService = new DataService();
+    this.cart = new Cart();
   }
 
   private renderPage(): void {
@@ -34,7 +37,7 @@ class App {
       if (path === PagePaths.MainPage) {
         page = new MainPage().render();
       } else if (path === PagePaths.CartPage) {
-        page = new CartPage().render();
+        page = new CartPage(this.cart).render();
       } else if (path === PagePaths.ProductPage) {
         page = new ProductPage().render();
       } else {

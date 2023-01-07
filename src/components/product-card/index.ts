@@ -43,7 +43,7 @@ class ProductCard extends ComponentTemplate {
     productButtonsBox.className = 'product-card__buttons';
 
     const detailsButton = document.createElement('a');
-    detailsButton.href = '/product';
+    detailsButton.href = `/product/${product.id}`;
     detailsButton.className = 'button';
     detailsButton.innerText = 'DETAILS';
 

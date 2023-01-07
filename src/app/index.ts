@@ -27,26 +27,46 @@ class App {
 
   private renderPage(): void {
     this.content.innerHTML = '';
-    const path = window.location.pathname;
-    let page: HTMLElement | null = null;
+    let path = window.location.pathname;
+    if (path !== '/') path = path.replace(/\/$/, '');
 
+    console.log(path);
+
+    const isProductPath = (testPath: string): boolean => {
+      const pathParts = testPath.slice(1).split('/');
+      if (pathParts.length !== 2) return false;
+      return `/${pathParts[0]}` === PagePaths.ProductPage;
+    };
+
+    let page: HTMLElement | null = null;
     (async () => {
       if (path === PagePaths.MainPage) {
         const products = await this.dataService.getProducts();
         page = new MainPage(products).render();
       } else if (path === PagePaths.CartPage) {
         page = new CartPage().render();
-      } else if (path === PagePaths.ProductPage) {
-        page = new ProductPage().render();
+      } else if (isProductPath(path)) {
+        const productId = path.slice(1).split('/')[1];
+        const productPage = new ProductPage();
+
+        try {
+          const product = await this.dataService.getProduct(productId);
+          productPage.showProduct(product);
+        } catch (error) {
+          console.error(error);
+          productPage.showError(productId);
+        }
+
+        page = productPage.render();
       } else {
         page = new ErrorPage().render();
       }
 
-      if (page) this.content.append(page);
+      this.content.append(page);
     })();
   }
 
-  private router(): void {
+  private addRouteListeners(): void {
     window.addEventListener('DOMContentLoaded', () => this.renderPage());
     window.addEventListener('popstate', () => this.renderPage());
   }
@@ -63,7 +83,7 @@ class App {
     this.container.append(this.header.render(this.navLinkClickHandler.bind(this)));
     this.container.append(this.content);
     document.body.prepend(this.container);
-    this.router();
+    this.addRouteListeners();
   }
 }
 

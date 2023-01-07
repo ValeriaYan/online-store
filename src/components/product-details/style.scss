@@ -1,0 +1,36 @@
+.product-details {
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid white;
+  border-radius: 15px;
+}
+
+.product-details__header {
+  padding: 10px 15px;
+  border-bottom: 1px solid white;
+}
+
+.product-details__title {
+  margin: 0;
+  text-align: center;
+}
+
+.product-details__body {
+  padding: 15px;
+  display: flex;
+}
+
+.product-details__gallery {
+  width: 40%;
+  flex-shrink: 0;
+}
+.product-details__info {
+  width: 40%;
+  flex-shrink: 0;
+  padding: 0 15px;
+}
+.product-details__cart-menu {
+  width: 20%;
+  flex-shrink: 0;
+  padding: 0 15px;
+}

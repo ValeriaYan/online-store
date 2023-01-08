@@ -3,13 +3,19 @@ import './style.scss';
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import clickLinkHandler from '../../utils/click-link-handler';
+import Cart from '../../model/cart';
 
 class ProductCard extends ComponentTemplate {
+  private cartModel: Cart;
   private cardId: number;
-  constructor(product: IProduct) {
+  private product: IProduct;
+
+  constructor(product: IProduct, cartModel: Cart) {
     super('div', 'product-card');
     this.cardId = product.id;
+    this.product = product;
     this.createCardContent(product);
+    this.cartModel = cartModel;
   }
 
   private createInfoRow(subtitle: string, text: string | number): HTMLElement {
@@ -53,7 +59,9 @@ class ProductCard extends ComponentTemplate {
     addToCartButton.innerText = 'ADD TO CART';
 
     detailsButton.onclick = clickLinkHandler;
-    addToCartButton.onclick = () => console.log(`Add to card ProductId: ${this.cardId}`);
+    addToCartButton.onclick = () => {
+      this.cartModel.addProduct(this.product);
+    };
 
     productButtonsBox.append(addToCartButton);
     productButtonsBox.append(detailsButton);

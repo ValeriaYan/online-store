@@ -12,10 +12,6 @@ const links = [
     href: PagePaths.CartPage,
     text: 'Cart',
   },
-  {
-    href: PagePaths.ProductPage,
-    text: 'Product',
-  },
 ];
 
 class Header extends ComponentTemplate {

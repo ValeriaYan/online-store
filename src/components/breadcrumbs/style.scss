@@ -1,0 +1,22 @@
+.breadcrumbs {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.breadcrumbs__link {
+  color: white;
+}
+
+.breadcrumbs__separator {
+  color: orange;
+  &::after {
+    content: '>>';
+  }
+}
+
+.breadcrumbs__current {
+  color: orange;
+}

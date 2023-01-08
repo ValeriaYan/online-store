@@ -1,0 +1,12 @@
+@import '../../styles/main.scss';
+
+.cart {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 3em;
+    padding: 2em 10px;
+
+    .summary {
+        align-self: start;
+    }
+}

@@ -47,7 +47,7 @@ class App {
         const products = await this.dataService.getProducts();
         page = new MainPage(products).render();
       } else if (path === PagePaths.CartPage) {
-        page = new CartPage().render();
+        page = new CartPage(this.cart).render();
       } else if (isProductPath(path)) {
         const productId = path.slice(1).split('/')[1];
         const productPage = new ProductPage();

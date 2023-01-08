@@ -21,6 +21,7 @@ module.exports = {
     main: './index.ts',
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     clean: isProd,
     filename: '[name].[contenthash].js',

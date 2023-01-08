@@ -1,4 +1,7 @@
+import { IProduct } from '../../types';
+
 class ProductPage {
+  private product: IProduct | null;
   private container: HTMLElement;
   static TextObject = {
     MainTitle: 'Product Page',
@@ -6,17 +9,25 @@ class ProductPage {
 
   constructor() {
     this.container = document.createElement('div');
+    this.container.className = '';
+    this.product = null;
   }
 
-  private createHeaderTitle(text: string): HTMLElement {
-    const headerTitle = document.createElement('h1');
-    headerTitle.innerText = text;
-    return headerTitle;
+  public showProduct(product: IProduct): void {
+    this.product = product;
+    const productDetails = document.createElement('div');
+    productDetails.textContent = `Product ID: ${product.id}`;
+    this.container.append(productDetails);
+  }
+
+  public showError(productID: string): void {
+    const errorBox = document.createElement('div');
+    errorBox.className = 'error-message';
+    errorBox.innerHTML = `Product with id <span class="error-message__highlight">${productID}<span> not found`;
+    this.container.append(errorBox);
   }
 
   render(): HTMLElement {
-    const title = this.createHeaderTitle(ProductPage.TextObject.MainTitle);
-    this.container.append(title);
     return this.container;
   }
 }

@@ -5,6 +5,7 @@ import ProductsList from '../../components/products-list';
 import { IProduct } from '../../types';
 import SortMenu from '../../components/sort-menu';
 import ResetFilters from '../../components/reset-filters';
+import Cart from '../../model/cart';
 
 class MainPage {
   private filters: Filters;
@@ -15,14 +16,14 @@ class MainPage {
   private filtersContainer: HTMLElement;
   private productsContainer: HTMLElement;
 
-  constructor(products: IProduct[]) {
+  constructor(products: IProduct[], cartModel: Cart) {
     this.container = document.createElement('div');
     this.container.className = 'main-page';
     this.filtersContainer = document.createElement('div');
     this.filtersContainer.className = 'main-page__filters';
     this.productsContainer = document.createElement('div');
     this.productsContainer.className = 'main-page__products';
-    this.productsList = new ProductsList();
+    this.productsList = new ProductsList(cartModel);
     this.sortMenu = new SortMenu(this.updateProductList, this.searchHandler);
     this.filters = new Filters(products, this.updateProductList, this.sortMenu.getSearchQuery);
     this.resetFilters = new ResetFilters(this.resetFiltersHandler);

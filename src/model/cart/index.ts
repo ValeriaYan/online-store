@@ -38,6 +38,14 @@ class Cart {
         }
     }
 
+    public getTotalPrice() {
+        return this._products.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+    }
+
+    public getTotalProducts() {
+        return this._products.reduce((sum, item) => sum + item.quantity, 0);
+    }
+
     get products(): ICartProduct[] {
         return this._products;
     }

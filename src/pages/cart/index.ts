@@ -1,12 +1,15 @@
+import './style.scss'
 import CartProducts from '../../components/cart-products'
+import Summary from '../../components/summary';
 import Cart from '../../model/cart';
+import Elem from '../../components/elem';
 
 class CartPage {
   private container: HTMLElement;
   private cart: Cart;
 
   constructor(cart: Cart) {
-    this.container = document.createElement('div');
+    this.container = new Elem('div', 'cart').elem;
     this.cart = cart;
   }
   
@@ -17,8 +20,10 @@ class CartPage {
   }
   
   render(): HTMLElement {
-    const cartProducts = new CartProducts(this.cart);
+    const summary = new Summary(this.cart);
+    const cartProducts = new CartProducts(this.cart, summary);
     this.container.append(cartProducts.render());
+    this.container.append(summary.render());
     return this.container;
   }
 }

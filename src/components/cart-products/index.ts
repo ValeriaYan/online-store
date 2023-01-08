@@ -6,6 +6,7 @@ import Cart from '../../model/cart';
 import { ICartProduct } from '../../model/cart';
 import ProductInCart from '../product-in-cart';
 import { IProduct } from '../../types';
+import Summary from '../summary';
 
 export default class CartProducts extends ComponentTemplate{
     private _cart: Cart;
@@ -14,8 +15,9 @@ export default class CartProducts extends ComponentTemplate{
     private _productList: HTMLElement;
     private _numberPage: HTMLElement;
     private _limitInput: HTMLInputElement;
+    private _summary: Summary;
 
-    constructor(cart: Cart) {
+    constructor(cart: Cart, summary: Summary) {
         super('div', 'cart-products');
         this._cart = cart;
         this._limit = 3;
@@ -23,6 +25,7 @@ export default class CartProducts extends ComponentTemplate{
         this._productList = new Elem('div', 'cart-products__products').elem;
         this._numberPage = new Elem('span', 'page-numbers__number').elem;
         this._limitInput = <HTMLInputElement>new Elem('input', 'controls__input').elem;
+        this._summary = summary;
     }
 
     private createHeader(): HTMLElement {
@@ -84,6 +87,7 @@ export default class CartProducts extends ComponentTemplate{
         for(let i = maxIndex - this._limit; i < maxIndex; i++) {
             if(products[i]) {
                 const productCard = new ProductInCart(products[i], i).render(this.reduceAmountProduct.bind(this));
+                productCard.addEventListener('click', this.clickProductInCart.bind(this));
                 this._productList.append(productCard);
             }
         }
@@ -104,6 +108,10 @@ export default class CartProducts extends ComponentTemplate{
         const message = new Elem('div', 'cart-products__message').elem;
         message.textContent = 'Cart is empty';
         this.container.append(message);
+    }
+
+    private clickProductInCart() {
+        this._summary.render();
     }
 
     private updatePage() {

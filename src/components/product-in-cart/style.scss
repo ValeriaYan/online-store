@@ -1,0 +1,53 @@
+@import '../../styles/base/vars';
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+
+    .item__number {
+        font-size: 1.7em;
+        padding: 20px;
+    }
+
+    .item__info {
+        display: flex;
+        flex: 1 1 auto;
+        .item__img-wrap {
+            height: 150px;
+            width: 200px;
+            margin-right: 2em;
+            
+            .item__img {
+                height: 100%;
+                width: 100%;
+                object-fit: fill;
+            }
+        }
+
+        .item__main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .item__title {
+                font-size: 1.6em;
+            }
+        }
+    }
+
+    .item__controls {
+        text-align: center;
+
+        .item__quantity-control {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.7em;
+
+            .item__button {
+                cursor: pointer;
+            }
+        }
+    }
+}

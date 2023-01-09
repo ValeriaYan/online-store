@@ -41,6 +41,8 @@ class ProductsList extends ComponentTemplate {
     if (queryParamsString) {
       const queryParams = new URLSearchParams(queryParamsString);
       this.viewMode = queryParams.get('big') === 'false' ? 'small' : 'big';
+    } else {
+      this.viewMode = 'big';
     }
   }
 

@@ -1,57 +1,57 @@
 @import '../../styles/base/vars';
 
 .cart-products {
-    .cart-products__message {
-        height: 90vh;
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
+  .cart-products__message {
+    height: 90vh;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+  }
+
+  .cart-products__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+
+    .cart-products__title {
+      font-size: 2em;
     }
 
-    .cart-products__header {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 0;
+    .cart-products__controls {
+      display: flex;
+      align-items: center;
+      font-size: 1.4em;
 
-        .cart-products__title {
-            font-size: 2em;
+      .controls__limit {
+        margin-right: 1.2em;
+
+        .controls__input {
+          background-color: rgba(0, 0, 0, 0.5);
+          border: none;
+          outline: none;
+          color: white;
+          width: 30px;
+          text-align: center;
         }
+      }
 
-        .cart-products__controls {
-            display: flex;
-            align-items: center;
-            font-size: 1.4em;
+      .page-numbers__button {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+        outline: none;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+      }
 
-            .controls__limit {
-                margin-right: 1.2em;
-
-                .controls__input {
-                    background-color: rgba(0, 0, 0, 0.5);
-                    border: none;
-                    outline: none;
-                    color: white;
-                    width: 30px;
-                    text-align: center;
-                }
-            }
-
-            .page-numbers__button {
-                background-color: rgba(0, 0, 0, 0.5);
-                border: none;
-                outline: none;
-                color: white;
-                text-align: center;
-            }
-
-            .page-numbers__number {
-                padding: 10px;
-            }
-        }
+      .page-numbers__number {
+        padding: 10px;
+      }
     }
-
+  }
 }

@@ -4,10 +4,16 @@ import ComponentTemplate from '../component-template';
 
 class viewMode extends ComponentTemplate {
   private updateProductList: () => void;
+  private smallModeButton: HTMLButtonElement;
+  private bigModeButton: HTMLButtonElement;
   private isBigMode = true;
 
   constructor(updateProductList: () => void) {
     super('div', 'view-mode');
+    this.smallModeButton = document.createElement('button');
+    this.smallModeButton.className = 'view-mode__button view-mode__button_small';
+    this.bigModeButton = document.createElement('button');
+    this.bigModeButton.className = 'view-mode__button view-mode__button_big';
     this.updateProductList = updateProductList;
     this.setMode();
   }
@@ -21,10 +27,21 @@ class viewMode extends ComponentTemplate {
   }
 
   private changeViewMode(isBigMode: boolean): void {
+    this.isBigMode = isBigMode;
     const url = new URL(window.location.toString());
     url.searchParams.set('big', String(isBigMode));
     window.history.pushState({}, '', url);
     this.updateProductList();
+  }
+
+  private updateButtons(): void {
+    if (this.isBigMode) {
+      this.smallModeButton.classList.remove('view-mode__button_active');
+      this.bigModeButton.classList.add('view-mode__button_active');
+    } else {
+      this.smallModeButton.classList.add('view-mode__button_active');
+      this.bigModeButton.classList.remove('view-mode__button_active');
+    }
   }
 
   private createButtons() {
@@ -34,33 +51,27 @@ class viewMode extends ComponentTemplate {
         target.append(span);
       }
     };
+    fillWithDots(this.smallModeButton, 6 * 6);
+    fillWithDots(this.bigModeButton, 4 * 4);
+    this.updateButtons();
 
-    const smallModeButton = document.createElement('button');
-    smallModeButton.className = 'view-mode__button view-mode__button_small';
-    fillWithDots(smallModeButton, 6 * 6);
-    smallModeButton.onclick = () => {
+    this.smallModeButton.onclick = () => {
       this.changeViewMode(false);
-      smallModeButton.classList.add('view-mode__button_active');
-      bigModeButton.classList.remove('view-mode__button_active');
+      this.updateButtons();
     };
 
-    const bigModeButton = document.createElement('button');
-    bigModeButton.className = 'view-mode__button view-mode__button_big';
-    fillWithDots(bigModeButton, 4 * 4);
-    bigModeButton.onclick = () => {
-      smallModeButton.classList.remove('view-mode__button_active');
-      bigModeButton.classList.add('view-mode__button_active');
+    this.bigModeButton.onclick = () => {
       this.changeViewMode(true);
+      this.updateButtons();
     };
 
-    if (this.isBigMode) {
-      bigModeButton.classList.add('view-mode__button_active');
-    } else {
-      smallModeButton.classList.add('view-mode__button_active');
-    }
+    this.container.append(this.smallModeButton);
+    this.container.append(this.bigModeButton);
+  }
 
-    this.container.append(smallModeButton);
-    this.container.append(bigModeButton);
+  public reset(): void {
+    this.bigModeButton.classList.add('view-mode__button_active');
+    this.smallModeButton.classList.remove('view-mode__button_active');
   }
 
   public render(): HTMLElement {

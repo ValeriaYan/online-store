@@ -57,6 +57,7 @@ class SortMenu extends ComponentTemplate {
   public reset() {
     this.sortBar.reset();
     this.searchBar.reset();
+    this.viewModeBar.reset();
   }
 
   public render() {

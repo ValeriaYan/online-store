@@ -25,7 +25,7 @@ class App {
     this.content = document.createElement('main');
     this.header = new Header();
     this.dataService = new DataService();
-    this.cart = new Cart().download();
+    this.cart = new Cart(this.header).download();
   }
 
   private renderPage(): void {

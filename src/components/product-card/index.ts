@@ -4,10 +4,10 @@ import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import clickLinkHandler from '../../utils/click-link-handler';
 import Cart from '../../model/cart';
+import AddToCartButton from '../add-to-cart-button';
 
 class ProductCard extends ComponentTemplate {
   private isInCart = false;
-  private cartModel: Cart;
   private cardId: number;
   private product: IProduct;
 
@@ -15,8 +15,8 @@ class ProductCard extends ComponentTemplate {
     super('div', 'product-card');
     this.cardId = product.id;
     this.product = product;
-    this.createCardContent(product);
-    this.cartModel = cartModel;
+    this.isInCart = cartModel.hasProduct(product.id);
+    this.createCardContent(product, cartModel);
   }
 
   private createInfoRow(subtitle: string, text: string | number): HTMLElement {
@@ -32,7 +32,8 @@ class ProductCard extends ComponentTemplate {
     return row;
   }
 
-  private createCardContent(product: IProduct) {
+  private createCardContent(product: IProduct, cartModel: Cart) {
+    if (this.isInCart) this.container.classList.add('product-card_in-cart');
     this.container.style.backgroundImage = `url(${product.thumbnail})`;
 
     const productTitle = document.createElement('h3');
@@ -58,25 +59,9 @@ class ProductCard extends ComponentTemplate {
     detailsButton.innerText = 'DETAILS';
     detailsButton.onclick = clickLinkHandler;
 
-    const addToCartButton = document.createElement('button');
-    addToCartButton.className = 'button';
-    addToCartButton.innerText = 'ADD TO CART';
+    const addToCartButton = new AddToCartButton(cartModel, this.product);
 
-    addToCartButton.onclick = () => {
-      if (this.isInCart) {
-        this.cartModel.removeProduct(this.product);
-        this.container.classList.remove('product-card_in-cart');
-        addToCartButton.innerText = 'ADD TO CART';
-        this.isInCart = false;
-      } else {
-        this.cartModel.addProduct(this.product);
-        this.container.classList.add('product-card_in-cart');
-        addToCartButton.innerText = 'DROP FROM CART';
-        this.isInCart = true;
-      }
-    };
-
-    productButtonsBox.append(addToCartButton);
+    productButtonsBox.append(addToCartButton.render());
     productButtonsBox.append(detailsButton);
 
     this.container.append(productTitle);

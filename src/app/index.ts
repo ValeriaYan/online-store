@@ -54,7 +54,7 @@ class App {
 
         try {
           const product = await this.dataService.getProduct(productId);
-          productPage.showProduct(product);
+          productPage.showProduct(product, this.cart);
         } catch (error) {
           console.error(error);
           productPage.showError(productId);

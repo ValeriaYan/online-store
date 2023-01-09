@@ -3,12 +3,17 @@ import './style.scss';
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import ProductGallery from '../product-gallery';
+import Cart from '../../model/cart';
+import AddToCartButton from '../add-to-cart-button';
 
 class ProductDetails extends ComponentTemplate {
   private product: IProduct;
+  private cartModel: Cart;
+  private isInCart = false;
 
-  constructor(product: IProduct) {
+  constructor(product: IProduct, cartModel: Cart) {
     super('div', 'product-details');
+    this.cartModel = cartModel;
     this.product = product;
   }
 
@@ -53,7 +58,7 @@ class ProductDetails extends ComponentTemplate {
     return productInfo;
   }
 
-  private createCartMenu(): HTMLElement {
+  private createCartMenu = (): HTMLElement => {
     const cartMenu = document.createElement('div');
     cartMenu.className = 'product-details__cart-menu';
 
@@ -61,9 +66,12 @@ class ProductDetails extends ComponentTemplate {
     productPrice.className = 'product-details__price';
     productPrice.innerText = this.product.price.toString();
 
+    const addToCartButton = new AddToCartButton(this.cartModel, this.product);
+
     cartMenu.append(productPrice);
+    cartMenu.append(addToCartButton.render());
     return cartMenu;
-  }
+  };
 
   private createHeader(): void {
     const header = document.createElement('div');

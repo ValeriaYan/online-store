@@ -136,6 +136,11 @@ class Summary extends ComponentTemplate {
         this.createAppliedCodes();
     }
 
+    public remove() {
+        this.container.innerHTML = '';
+        this.container.style.border = 'none';
+    }
+
     public render(): HTMLElement {
         this.container.innerHTML = '';
         this.createTotal();
@@ -146,6 +151,9 @@ class Summary extends ComponentTemplate {
         this.createAppliedCodes();
         this.container.append(this._promoCode);
         this.container.append(this.createBuyBtn());
+        if(this._cart.getTotalProducts() === 0) {
+            this.remove();
+        }
         return this.container;
     }
 }

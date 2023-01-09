@@ -1,3 +1,5 @@
+import './style.scss';
+
 import ComponentTemplate from '../component-template';
 
 class SearchBar extends ComponentTemplate {
@@ -24,6 +26,7 @@ class SearchBar extends ComponentTemplate {
 
   private createSearchInput(updateProductList: () => void): HTMLInputElement {
     const searchInput = document.createElement('input');
+    searchInput.className = 'search__input';
     searchInput.type = 'search';
     searchInput.placeholder = 'Search product';
 

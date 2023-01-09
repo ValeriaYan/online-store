@@ -1,43 +1,23 @@
+@import '../../styles/base/vars';
+
 .filters {
   width: 260px;
   flex-shrink: 0;
 }
 
 .filter {
-  padding: 10px;
-  border: 1px solid white;
+  border: 1px solid $border-color;
   border-radius: 15px;
   margin-bottom: 15px;
+  overflow: hidden;
 }
 
 .filter__title {
   margin: 0;
-  margin-bottom: 15px;
+  padding: 0.5em;
+  font-size: 1.6rem;
   text-align: center;
-}
-
-.filter ul {
-  padding: 5px;
-  margin: 0;
-  width: 100%;
-  max-height: 20vh;
-  overflow-y: auto;
-  list-style: none;
-}
-
-.filter ul li {
-  display: flex;
-  justify-content: space-between;
-}
-
-.select-filter__item {
-  margin-bottom: 5px;
-
-  & label {
-    cursor: pointer;
-  }
-
-  &_active {
-    background: gray;
-  }
+  color: $primary-color;
+  background: black;
+  border-bottom: 1px solid $border-color;
 }

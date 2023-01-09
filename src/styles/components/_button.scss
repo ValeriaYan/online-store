@@ -1,15 +1,16 @@
 .button {
-  display: block;
-  padding: 5px;
-  background: white;
-  color: black;
-  cursor: pointer;
-  text-decoration: none;
+  padding: 0.75em 1em;
   line-height: 1;
+  font-size: 1.4rem;
+  background: orange;
+  color: black;
   border: none;
   border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
-    background: gray;
+    background: goldenrod;
   }
 }

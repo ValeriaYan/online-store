@@ -6,6 +6,7 @@ import clickLinkHandler from '../../utils/click-link-handler';
 import Cart from '../../model/cart';
 
 class ProductCard extends ComponentTemplate {
+  private isInCart = false;
   private cartModel: Cart;
   private cardId: number;
   private product: IProduct;
@@ -22,7 +23,7 @@ class ProductCard extends ComponentTemplate {
     const row = document.createElement('p');
     row.className = 'product-card__info-row';
     const subtitleBox = document.createElement('span');
-    subtitleBox.className = 'product-card__info-subtitle';
+    subtitleBox.className = 'product-card__info-title';
     subtitleBox.innerText = subtitle;
 
     row.append(subtitleBox);
@@ -32,6 +33,8 @@ class ProductCard extends ComponentTemplate {
   }
 
   private createCardContent(product: IProduct) {
+    this.container.style.backgroundImage = `url(${product.thumbnail})`;
+
     const productTitle = document.createElement('h3');
     productTitle.className = 'product-card__title';
     productTitle.textContent = product.title;
@@ -53,14 +56,24 @@ class ProductCard extends ComponentTemplate {
     detailsButton.href = `/product/${product.id}`;
     detailsButton.className = 'button';
     detailsButton.innerText = 'DETAILS';
+    detailsButton.onclick = clickLinkHandler;
 
     const addToCartButton = document.createElement('button');
     addToCartButton.className = 'button';
     addToCartButton.innerText = 'ADD TO CART';
 
-    detailsButton.onclick = clickLinkHandler;
     addToCartButton.onclick = () => {
-      this.cartModel.addProduct(this.product);
+      if (this.isInCart) {
+        this.cartModel.removeProduct(this.product);
+        this.container.classList.remove('product-card_in-cart');
+        addToCartButton.innerText = 'ADD TO CART';
+        this.isInCart = false;
+      } else {
+        this.cartModel.addProduct(this.product);
+        this.container.classList.add('product-card_in-cart');
+        addToCartButton.innerText = 'DROP FROM CART';
+        this.isInCart = true;
+      }
     };
 
     productButtonsBox.append(addToCartButton);

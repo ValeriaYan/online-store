@@ -1,5 +1,19 @@
+@import '../../styles/base/vars';
+
 .sort-menu {
-  padding: 15px;
+  position: sticky;
+  top: 0;
+  margin: 0 15px;
+  padding: 10px 15px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  background: black;
+  border: 1px solid $border-color;
+  border-radius: 30px;
+}
+
+.sort-menu__found {
+  font-size: 2.2rem;
+  padding: 0 15px;
 }

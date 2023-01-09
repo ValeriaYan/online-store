@@ -3,20 +3,27 @@ import './style.scss';
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import clickLinkHandler from '../../utils/click-link-handler';
+import Cart from '../../model/cart';
+import AddToCartButton from '../add-to-cart-button';
 
 class ProductCard extends ComponentTemplate {
+  private isInCart = false;
   private cardId: number;
-  constructor(product: IProduct) {
+  private product: IProduct;
+
+  constructor(product: IProduct, cartModel: Cart) {
     super('div', 'product-card');
     this.cardId = product.id;
-    this.createCardContent(product);
+    this.product = product;
+    this.isInCart = cartModel.hasProduct(product.id);
+    this.createCardContent(product, cartModel);
   }
 
   private createInfoRow(subtitle: string, text: string | number): HTMLElement {
     const row = document.createElement('p');
     row.className = 'product-card__info-row';
     const subtitleBox = document.createElement('span');
-    subtitleBox.className = 'product-card__info-subtitle';
+    subtitleBox.className = 'product-card__info-title';
     subtitleBox.innerText = subtitle;
 
     row.append(subtitleBox);
@@ -25,7 +32,10 @@ class ProductCard extends ComponentTemplate {
     return row;
   }
 
-  private createCardContent(product: IProduct) {
+  private createCardContent(product: IProduct, cartModel: Cart) {
+    if (this.isInCart) this.container.classList.add('product-card_in-cart');
+    this.container.style.backgroundImage = `url(${product.thumbnail})`;
+
     const productTitle = document.createElement('h3');
     productTitle.className = 'product-card__title';
     productTitle.textContent = product.title;
@@ -47,15 +57,11 @@ class ProductCard extends ComponentTemplate {
     detailsButton.href = `/product/${product.id}`;
     detailsButton.className = 'button';
     detailsButton.innerText = 'DETAILS';
-
-    const addToCartButton = document.createElement('button');
-    addToCartButton.className = 'button';
-    addToCartButton.innerText = 'ADD TO CART';
-
     detailsButton.onclick = clickLinkHandler;
-    addToCartButton.onclick = () => console.log(`Add to card ProductId: ${this.cardId}`);
 
-    productButtonsBox.append(addToCartButton);
+    const addToCartButton = new AddToCartButton(cartModel, this.product);
+
+    productButtonsBox.append(addToCartButton.render());
     productButtonsBox.append(detailsButton);
 
     this.container.append(productTitle);

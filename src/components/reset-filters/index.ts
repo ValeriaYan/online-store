@@ -1,3 +1,5 @@
+import './style.scss';
+
 import ComponentTemplate from '../component-template';
 
 class ResetFilters extends ComponentTemplate {

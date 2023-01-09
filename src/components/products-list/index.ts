@@ -3,10 +3,13 @@ import './style.scss';
 import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import ProductCard from '../product-card';
+import Cart from '../../model/cart';
 
 class ProductsList extends ComponentTemplate {
-  constructor() {
+  private cartModel: Cart;
+  constructor(cartModel: Cart) {
     super('div', 'products-list');
+    this.cartModel = cartModel;
   }
 
   private addNoFoundMessage(): void {
@@ -23,7 +26,7 @@ class ProductsList extends ComponentTemplate {
       products.forEach((product) => {
         const productItem = document.createElement('div');
         productItem.className = 'products-list__item';
-        productItem.append(new ProductCard(product).render());
+        productItem.append(new ProductCard(product, this.cartModel).render());
         this.container.append(productItem);
       });
     }

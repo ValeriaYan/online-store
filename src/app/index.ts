@@ -45,7 +45,7 @@ class App {
     (async () => {
       if (path === PagePaths.MainPage) {
         const products = await this.dataService.getProducts();
-        page = new MainPage(products).render();
+        page = new MainPage(products, this.cart).render();
       } else if (path === PagePaths.CartPage) {
         page = new CartPage(this.cart).render();
       } else if (isProductPath(path)) {
@@ -54,14 +54,13 @@ class App {
 
         try {
           const product = await this.dataService.getProduct(productId);
-          productPage.showProduct(product);
+          productPage.showProduct(product, this.cart);
         } catch (error) {
           console.error(error);
           productPage.showError(productId);
         }
 
         page = productPage.render();
-
       } else {
         page = new ErrorPage().render();
       }

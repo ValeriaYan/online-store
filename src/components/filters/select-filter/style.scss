@@ -1,0 +1,42 @@
+@import '../../../styles/base/vars';
+
+.select-filter__list {
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  max-height: 20vh;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.select-filter__item {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+
+  & label {
+    cursor: pointer;
+  }
+
+  &_excluded {
+    opacity: 0.5;
+  }
+}
+
+.select-filter__label {
+  display: flex;
+}
+
+.select-filter__checkbox {
+  accent-color: $primary-color;
+  cursor: pointer;
+}
+
+.select-filter__text {
+  padding: 0 5px;
+  color: $primary-color;
+}
+
+.select-filter__quantity {
+  color: $text-color;
+}

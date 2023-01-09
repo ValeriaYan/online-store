@@ -66,7 +66,7 @@ module.exports = {
       },
       {
         test: /\.svg/i,
-        type: 'asset/source',
+        type: 'asset/inline',
       },
     ],
   },

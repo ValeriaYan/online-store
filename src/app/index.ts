@@ -1,3 +1,4 @@
+import Footer from '../components/footer';
 import Header from '../components/header';
 import Cart from '../model/cart';
 import CartPage from '../pages/cart';
@@ -16,6 +17,7 @@ class App {
   private container: HTMLElement;
   private content: HTMLElement;
   private header: Header;
+  private footer: Footer;
   private dataService: DataService;
   private cart: Cart;
 
@@ -24,6 +26,7 @@ class App {
     this.container.className = 'container';
     this.content = document.createElement('main');
     this.header = new Header();
+    this.footer = new Footer();
     this.dataService = new DataService();
     this.cart = new Cart(this.header).download();
   }
@@ -32,8 +35,6 @@ class App {
     this.content.innerHTML = '';
     let path = window.location.pathname;
     if (path !== '/') path = path.replace(/\/$/, '');
-
-    console.log(path);
 
     const isProductPath = (testPath: string): boolean => {
       const pathParts = testPath.slice(1).split('/');
@@ -74,17 +75,10 @@ class App {
     window.addEventListener('popstate', () => this.renderPage());
   }
 
-  private navLinkClickHandler(event: Event) {
-    event.preventDefault();
-    if (event.target instanceof HTMLAnchorElement) {
-      history.pushState({}, '', event.target.href);
-      this.renderPage();
-    }
-  }
-
   public run(): void {
-    this.container.append(this.header.render(this.navLinkClickHandler.bind(this)));
+    this.container.append(this.header.render());
     this.container.append(this.content);
+    this.container.append(this.footer.render());
     document.body.prepend(this.container);
     this.addRouteListeners();
   }

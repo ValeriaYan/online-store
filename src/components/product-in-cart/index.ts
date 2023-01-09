@@ -82,11 +82,9 @@ class ProductInCart extends ComponentTemplate {
             if(this._cartProduct.quantity - 1 <= 0) {
                 reduceAmountProduct(this._cartProduct.product);
             }
-            this._cartProduct.quantity--;
             this._cart.reduceAmountProduct(this._cartProduct.product);
         } else {
             if(this._cartProduct.quantity + 1 <= this._cartProduct.product.stock) {
-                this._cartProduct.quantity++;
                 this._cart.addProduct(this._cartProduct.product);
             }
         }

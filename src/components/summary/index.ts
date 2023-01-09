@@ -2,6 +2,7 @@ import './style.scss'
 import Cart from '../../model/cart';
 import ComponentTemplate from '../component-template';
 import Elem from '../elem';
+import CheckoutWindow from '../checkout-window';
 
 class Summary extends ComponentTemplate {
     private _cart: Cart;
@@ -9,9 +10,12 @@ class Summary extends ComponentTemplate {
     private _promoCode: HTMLElement;
     private _availablePromoCode: HTMLElement;
     private _appliedCodes: HTMLElement;
-    constructor(cart: Cart) {
+    private _checkoutWindow: CheckoutWindow;
+
+    constructor(cart: Cart, checkoutWindow: CheckoutWindow) {
         super('div', 'summary');
         this._cart = cart;
+        this._checkoutWindow = checkoutWindow;
         this._total = new Elem('div', 'summary__total').elem;
         this._promoCode = new Elem('div', 'summary__promo-code').elem;
         this._availablePromoCode = new Elem('div', 'summary__available-promo-code').elem;
@@ -98,6 +102,13 @@ class Summary extends ComponentTemplate {
         }
     }
 
+    private createBuyBtn(): HTMLButtonElement {
+        const btn = <HTMLButtonElement>new Elem('button', 'summary__button').elem;
+        btn.textContent = 'Buy Now';
+        btn.addEventListener('click', this._checkoutWindow.toggleCheckoutWindow.bind(this._checkoutWindow));
+        return btn;
+    }
+
     private addBtnHandler(promoCode: string) {
         this._cart.addPromoCode(promoCode);
         this.createTotal();
@@ -134,6 +145,7 @@ class Summary extends ComponentTemplate {
         this.container.append(this._appliedCodes);
         this.createAppliedCodes();
         this.container.append(this._promoCode);
+        this.container.append(this.createBuyBtn());
         return this.container;
     }
 }

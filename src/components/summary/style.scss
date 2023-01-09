@@ -88,4 +88,13 @@
             }
         }
     }
+    .summary__button {
+        padding: 10px;
+        font-size: 20px;
+        background-color: transparent;
+        border: 1px solid $success-color;
+        color: $success-color;
+
+        cursor: pointer;
+    }
 }

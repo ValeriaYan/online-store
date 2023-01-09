@@ -1,6 +1,7 @@
 import './style.scss'
 import CartProducts from '../../components/cart-products'
 import Summary from '../../components/summary';
+import CheckoutWindow from '../../components/checkout-window';
 import Cart from '../../model/cart';
 import Elem from '../../components/elem';
 
@@ -20,10 +21,12 @@ class CartPage {
   }
   
   render(): HTMLElement {
-    const summary = new Summary(this.cart);
+    const checkoutWindow = new CheckoutWindow();
+    const summary = new Summary(this.cart, checkoutWindow);
     const cartProducts = new CartProducts(this.cart, summary);
     this.container.append(cartProducts.render());
     this.container.append(summary.render());
+    this.container.append(checkoutWindow.render());
     return this.container;
   }
 }

@@ -52,3 +52,23 @@
   margin-right: 0.5em;
   color: $primary-color;
 }
+
+.products-list__item_small .product-card {
+  .product-card__info {
+    display: none;
+  }
+
+  .product-card__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-card__buttons {
+    padding: 15px 5px;
+  }
+
+  .button {
+    font-size: 1.2rem;
+  }
+}

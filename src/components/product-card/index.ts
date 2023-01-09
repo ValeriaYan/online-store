@@ -5,6 +5,7 @@ import ComponentTemplate from '../component-template';
 import clickLinkHandler from '../../utils/click-link-handler';
 import Cart from '../../model/cart';
 import AddToCartButton from '../add-to-cart-button';
+import storeOptions from '../../app/store-options';
 
 class ProductCard extends ComponentTemplate {
   private isInCart = false;
@@ -45,7 +46,9 @@ class ProductCard extends ComponentTemplate {
 
     productInfo.append(this.createInfoRow('Category:', product.category));
     productInfo.append(this.createInfoRow('Brand:', product.brand));
-    productInfo.append(this.createInfoRow('Price:', product.price));
+    productInfo.append(
+      this.createInfoRow('Price:', `${storeOptions.currencySymbol}${product.price}`)
+    );
     productInfo.append(this.createInfoRow('Discount:', product.discountPercentage));
     productInfo.append(this.createInfoRow('Rating:', product.rating));
     productInfo.append(this.createInfoRow('Stock:', product.stock));

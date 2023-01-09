@@ -10,6 +10,12 @@
   padding: 15px;
   flex-shrink: 0;
   aspect-ratio: 1/1;
+
+  &_small {
+    padding: 10px;
+    width: 16.6%;
+    min-width: 250px;
+  }
 }
 
 .products-list__no-found-message {

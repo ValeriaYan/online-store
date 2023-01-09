@@ -7,6 +7,8 @@ import Cart from '../../model/cart';
 
 class ProductsList extends ComponentTemplate {
   private cartModel: Cart;
+  private viewMode = 'big';
+
   constructor(cartModel: Cart) {
     super('div', 'products-list');
     this.cartModel = cartModel;
@@ -20,15 +22,25 @@ class ProductsList extends ComponentTemplate {
   }
 
   private createProductsList(products: IProduct[]): void {
+    this.setViewMode();
+
     if (products.length === 0) {
       this.addNoFoundMessage();
     } else {
       products.forEach((product) => {
         const productItem = document.createElement('div');
-        productItem.className = 'products-list__item';
+        productItem.className = `products-list__item products-list__item_${this.viewMode}`;
         productItem.append(new ProductCard(product, this.cartModel).render());
         this.container.append(productItem);
       });
+    }
+  }
+
+  private setViewMode(): void {
+    const queryParamsString = window.location.search;
+    if (queryParamsString) {
+      const queryParams = new URLSearchParams(queryParamsString);
+      this.viewMode = queryParams.get('big') === 'false' ? 'small' : 'big';
     }
   }
 

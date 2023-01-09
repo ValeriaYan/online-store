@@ -5,11 +5,12 @@ import ComponentTemplate from '../component-template';
 import ProductGallery from '../product-gallery';
 import Cart from '../../model/cart';
 import AddToCartButton from '../add-to-cart-button';
+import storeOptions from '../../app/store-options';
+import clickLinkHandler from '../../utils/click-link-handler';
 
 class ProductDetails extends ComponentTemplate {
   private product: IProduct;
   private cartModel: Cart;
-  private isInCart = false;
 
   constructor(product: IProduct, cartModel: Cart) {
     super('div', 'product-details');
@@ -64,12 +65,21 @@ class ProductDetails extends ComponentTemplate {
 
     const productPrice = document.createElement('div');
     productPrice.className = 'product-details__price';
-    productPrice.innerText = this.product.price.toString();
-
+    productPrice.innerText = storeOptions.currencySymbol + this.product.price.toString();
     const addToCartButton = new AddToCartButton(this.cartModel, this.product);
+
+    const buyNowButton = document.createElement('a');
+    buyNowButton.className = 'button';
+    buyNowButton.href = '/cart';
+    buyNowButton.innerText = 'BY NOW';
+    buyNowButton.onclick = (event) => {
+      if (!this.cartModel.hasProduct(this.product.id)) this.cartModel.addProduct(this.product);
+      clickLinkHandler(event);
+    };
 
     cartMenu.append(productPrice);
     cartMenu.append(addToCartButton.render());
+    cartMenu.append(buyNowButton);
     return cartMenu;
   };
 

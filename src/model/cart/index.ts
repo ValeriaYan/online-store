@@ -98,7 +98,11 @@ class Cart {
     this._appliedPromoCodes.splice(indexPromoCode, 1);
   }
 
-  public thereIsPromoCode(): boolean {
+  public clearCart() {
+    this._products.forEach((item) => this.removeProduct(item.product));
+  }
+
+  public thereIsPromoCode() {
     if (this._appliedPromoCodes.length !== 0) {
       return true;
     }

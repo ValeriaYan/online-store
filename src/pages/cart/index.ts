@@ -21,7 +21,7 @@ class CartPage {
   }
   
   render(): HTMLElement {
-    const checkoutWindow = new CheckoutWindow();
+    const checkoutWindow = new CheckoutWindow(this.cart);
     const summary = new Summary(this.cart, checkoutWindow);
     const cartProducts = new CartProducts(this.cart, summary);
     this.container.append(cartProducts.render());

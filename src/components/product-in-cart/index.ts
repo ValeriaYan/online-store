@@ -1,7 +1,7 @@
 import './style.scss';
 import ComponentTemplate from '../component-template';
 import Elem from '../elem';
-import { ICartProduct } from '../../model/cart';
+import Cart, { ICartProduct } from '../../model/cart';
 
 class ProductInCart extends ComponentTemplate {
     private _cartProduct: ICartProduct;
@@ -9,14 +9,16 @@ class ProductInCart extends ComponentTemplate {
     private _number: HTMLElement;
     private _info: HTMLElement;
     private _controls: HTMLElement;
+    private _cart: Cart;
 
-    constructor(cartProduct: ICartProduct, indexProduct: number) {
+    constructor(cartProduct: ICartProduct, indexProduct: number, cart: Cart) {
         super('div', 'cart-products__item item');
         this._cartProduct = cartProduct;
         this._indexProduct = indexProduct;
         this._number = new Elem('div', 'item__number').elem;
         this._info = new Elem('div', 'item__info').elem;
         this._controls = new Elem('div', 'item__controls').elem;
+        this._cart = cart;
     }
 
 
@@ -81,9 +83,11 @@ class ProductInCart extends ComponentTemplate {
                 reduceAmountProduct(this._cartProduct.product);
             }
             this._cartProduct.quantity--;
+            this._cart.reduceAmountProduct(this._cartProduct.product);
         } else {
             if(this._cartProduct.quantity + 1 <= this._cartProduct.product.stock) {
                 this._cartProduct.quantity++;
+                this._cart.addProduct(this._cartProduct.product);
             }
         }
         this.container.removeChild(this._controls);

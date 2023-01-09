@@ -4,11 +4,13 @@ import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import SortBar from '../sort-bar';
 import SearchBar from '../search-bar';
+import ViewMode from '../view-mode';
 
 class SortMenu extends ComponentTemplate {
   private sortBar: SortBar;
   private foundBar: HTMLElement;
   private searchBar: SearchBar;
+  private viewModeBar: ViewMode;
 
   constructor(updateProductList: () => void, searchHandler: () => void) {
     super('div', 'sort-menu');
@@ -16,6 +18,7 @@ class SortMenu extends ComponentTemplate {
     this.foundBar.className = 'sort-menu__found';
     this.sortBar = new SortBar(updateProductList);
     this.searchBar = new SearchBar(searchHandler);
+    this.viewModeBar = new ViewMode(updateProductList);
   }
 
   public updateFoundBar(amount: number) {
@@ -60,6 +63,7 @@ class SortMenu extends ComponentTemplate {
     this.container.append(this.sortBar.render());
     this.container.append(this.foundBar);
     this.container.append(this.searchBar.render());
+    this.container.append(this.viewModeBar.render());
     return this.container;
   }
 }

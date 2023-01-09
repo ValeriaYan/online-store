@@ -4,6 +4,7 @@ import { IProduct } from '../../types';
 import ComponentTemplate from '../component-template';
 import SelectFilter, { SelectFilterItem } from './select-filter';
 import RangeFilter from './range-filter';
+import storeOptions from '../../app/store-options';
 
 export type SelectFiltersType = Extract<keyof IProduct, 'category' | 'brand'>;
 export type RangeFiltersType = Extract<keyof IProduct, 'price' | 'stock'>;
@@ -40,7 +41,7 @@ class Filters extends ComponentTemplate {
         max: Math.max(...prices),
       },
       this.rangeFilterHandler,
-      '$',
+      storeOptions.currencySymbol,
       2
     );
 

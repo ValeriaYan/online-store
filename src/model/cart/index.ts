@@ -31,6 +31,7 @@ class Cart {
     } else {
       productInCart.quantity++;
     }
+    this.save();
   }
 
   public removeProduct(product: IProduct): void {
@@ -40,6 +41,7 @@ class Cart {
     if (indexProductInCart !== -1) {
       this._products.splice(indexProductInCart, 1);
     }
+    this.save();
   }
 
   public reduceAmountProduct(product: IProduct): void {
@@ -52,6 +54,7 @@ class Cart {
         this.removeProduct(product);
       }
     }
+    this.save();
   }
 
   public getTotalPrice() {
@@ -107,6 +110,21 @@ class Cart {
 
   public hasProduct(productId: number): boolean {
     return this._products.some((productObj) => productObj.product.id === productId);
+  }
+
+  public save() {
+    localStorage.setItem('cart', JSON.stringify(this));
+  }
+
+  public download(): Cart {
+    if(localStorage.getItem('cart')) {
+        const parseObject = JSON.parse(<string>localStorage.getItem('cart'));
+        this._products = parseObject._products;
+        this._appliedPromoCodes = parseObject._appliedPromoCodes;
+        this._promoCodes = parseObject._promoCodes;
+    }
+
+    return this;
   }
 
   get appliedPromoCodes(): string[] {

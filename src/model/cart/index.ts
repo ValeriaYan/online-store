@@ -1,3 +1,4 @@
+import Header from '../../components/header';
 import { IProduct } from '../../types';
 
 export interface ICartProduct {
@@ -13,13 +14,16 @@ class Cart {
   private _products: ICartProduct[];
   private _appliedPromoCodes: string[];
   private _promoCodes: promoCodes;
-  constructor() {
+  private _header: Header;
+  constructor(header: Header) {
     this._products = [];
     this._appliedPromoCodes = [];
     this._promoCodes = {
       RS: 10,
       EPM: 10,
     };
+
+    this._header = header;
   }
 
   public addProduct(product: IProduct): void {
@@ -114,6 +118,7 @@ class Cart {
 
   public save() {
     localStorage.setItem('cart', JSON.stringify(this));
+    this._header.renderTotalCart(this.getTotalProducts(), this.getTotalPrice());
   }
 
   public download(): Cart {
@@ -123,6 +128,8 @@ class Cart {
         this._appliedPromoCodes = parseObject._appliedPromoCodes;
         this._promoCodes = parseObject._promoCodes;
     }
+
+    this._header.renderTotalCart(this.getTotalProducts(), this.getTotalPrice());
 
     return this;
   }

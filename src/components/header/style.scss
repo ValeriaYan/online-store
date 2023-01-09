@@ -1,10 +1,19 @@
 @import '../../styles/base/vars';
 
-.nav {
+.header {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  .nav {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: space-evenly;
+  
+    a {
+      color: $text-color;
+    }
 
-  a {
-    color: $text-color;
+    span {
+      margin-left: 10px;
+    }
   }
 }

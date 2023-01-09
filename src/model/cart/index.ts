@@ -45,6 +45,9 @@ class Cart {
     if (indexProductInCart !== -1) {
       this._products.splice(indexProductInCart, 1);
     }
+    if(this.getTotalProducts() === 0) {
+      this.appliedPromoCodes.splice(0, this.appliedPromoCodes.length);
+    }
     this.save();
   }
 
@@ -95,7 +98,11 @@ class Cart {
     this._appliedPromoCodes.splice(indexPromoCode, 1);
   }
 
-  public thereIsPromoCode(): boolean {
+  public clearCart() {
+    this._products.forEach((item) => this.removeProduct(item.product));
+  }
+
+  public thereIsPromoCode() {
     if (this._appliedPromoCodes.length !== 0) {
       return true;
     }

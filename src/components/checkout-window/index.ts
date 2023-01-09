@@ -2,6 +2,7 @@ import './style.scss'
 import ComponentTemplate from '../component-template';
 import Elem from '../elem';
 import { PagePaths } from '../../app';
+import Cart from '../../model/cart';
 
 const enum Error {
     wrongName = 'Enter your first and last name, each must contain at least 3 characters',
@@ -22,8 +23,9 @@ class CheckoutWindow extends ComponentTemplate{
     private inputCardNumber: HTMLInputElement;
     private inputCardValid: HTMLInputElement;
     private inputCardCode: HTMLInputElement;
+    private cart: Cart;
 
-    constructor() {
+    constructor(cart: Cart) {
         super('div', 'checkout-window');
         this.inputName = this.createInput('form__input form__input_name', 'text', 'FirstName LastName', 'name');
         this.inputPhone = this.createInput('form__input form__input_phone', 'tel', 'Phone number', 'tel');
@@ -33,6 +35,7 @@ class CheckoutWindow extends ComponentTemplate{
         this.inputCardValid = this.createInput('form__input', 'text', '00/00', 'valid');
         this.inputCardValid.addEventListener('input', this.inputCardValidHandler.bind(this));
         this.inputCardCode = this.createInput('form__input', 'number', '000', 'code');
+        this.cart = cart;
     }
 
     private createForm(): HTMLElement {
@@ -253,6 +256,7 @@ class CheckoutWindow extends ComponentTemplate{
 
         this.createSuccessMessage();
         setTimeout(() => window.location.href = PagePaths.MainPage, 3000);
+        this.cart.clearCart();
 
         return true;
         

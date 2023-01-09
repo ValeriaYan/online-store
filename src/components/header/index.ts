@@ -15,8 +15,14 @@ const links = [
 ];
 
 class Header extends ComponentTemplate {
+  private productsInCart: HTMLElement;
+  private totalCart: HTMLElement;
   constructor() {
     super('header', 'header');
+    this.productsInCart = document.createElement('span');
+    this.productsInCart.textContent = '0';
+    this.totalCart = document.createElement('div');
+    this.totalCart.textContent = '€0';
   }
 
   renderNavigation(navLinkClickHandler: (event: Event) => void) {
@@ -29,13 +35,23 @@ class Header extends ComponentTemplate {
       pageLink.innerText = link.text;
       pageLink.onclick = (event) => navLinkClickHandler(event);
       pageLinksList.append(pageLink);
+
+      if(link.text === 'Cart') {
+        pageLink.append(this.productsInCart);
+      }
     });
 
     this.container.append(pageLinksList);
   }
 
+  renderTotalCart(countProducts: number, totalPrice: number) {
+    this.productsInCart.textContent = String(countProducts);
+    this.totalCart.textContent = `€${totalPrice}`;
+  }
+
   render(navLinkClickHandler: (event: Event) => void): HTMLElement {
     this.renderNavigation(navLinkClickHandler);
+    this.container.append(this.totalCart);
     return this.container;
   }
 }

@@ -86,7 +86,7 @@ export default class CartProducts extends ComponentTemplate{
         const maxIndex = this._limit * this._page;
         for(let i = maxIndex - this._limit; i < maxIndex; i++) {
             if(products[i]) {
-                const productCard = new ProductInCart(products[i], i).render(this.reduceAmountProduct.bind(this));
+                const productCard = new ProductInCart(products[i], i, this._cart).render(this.reduceAmountProduct.bind(this));
                 productCard.addEventListener('click', this.clickProductInCart.bind(this));
                 this._productList.append(productCard);
             }

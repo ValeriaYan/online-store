@@ -1,3 +1,4 @@
+import Header from '../../components/header';
 import { IProduct } from '../../types';
 
 export interface ICartProduct {
@@ -13,13 +14,16 @@ class Cart {
   private _products: ICartProduct[];
   private _appliedPromoCodes: string[];
   private _promoCodes: promoCodes;
-  constructor() {
+  private _header: Header;
+  constructor(header: Header) {
     this._products = [];
     this._appliedPromoCodes = [];
     this._promoCodes = {
       RS: 10,
       EPM: 10,
     };
+
+    this._header = header;
   }
 
   public addProduct(product: IProduct): void {
@@ -31,6 +35,7 @@ class Cart {
     } else {
       productInCart.quantity++;
     }
+    this.save();
   }
 
   public removeProduct(product: IProduct): void {
@@ -40,6 +45,7 @@ class Cart {
     if (indexProductInCart !== -1) {
       this._products.splice(indexProductInCart, 1);
     }
+    this.save();
   }
 
   public reduceAmountProduct(product: IProduct): void {
@@ -52,6 +58,7 @@ class Cart {
         this.removeProduct(product);
       }
     }
+    this.save();
   }
 
   public getTotalPrice() {
@@ -107,6 +114,24 @@ class Cart {
 
   public hasProduct(productId: number): boolean {
     return this._products.some((productObj) => productObj.product.id === productId);
+  }
+
+  public save() {
+    localStorage.setItem('cart', JSON.stringify(this));
+    this._header.renderTotalCart(this.getTotalProducts(), this.getTotalPrice());
+  }
+
+  public download(): Cart {
+    if(localStorage.getItem('cart')) {
+        const parseObject = JSON.parse(<string>localStorage.getItem('cart'));
+        this._products = parseObject._products;
+        this._appliedPromoCodes = parseObject._appliedPromoCodes;
+        this._promoCodes = parseObject._promoCodes;
+    }
+
+    this._header.renderTotalCart(this.getTotalProducts(), this.getTotalPrice());
+
+    return this;
   }
 
   get appliedPromoCodes(): string[] {

@@ -74,6 +74,7 @@ export default class CartProducts extends ComponentTemplate{
             while(this.container.firstChild) {
                 this.container.removeChild(this.container.firstChild);
             }
+            this._summary.remove();
             this.createMessageAboutEmpty();
         }
         while(this._productList.firstChild) {

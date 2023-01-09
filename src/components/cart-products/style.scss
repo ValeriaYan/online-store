@@ -3,6 +3,10 @@
 .cart-products {
     .cart-products__message {
         height: 90vh;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%);
         display: flex;
         justify-content: center;
         align-items: center;

@@ -45,6 +45,9 @@ class Cart {
     if (indexProductInCart !== -1) {
       this._products.splice(indexProductInCart, 1);
     }
+    if(this.getTotalProducts() === 0) {
+      this.appliedPromoCodes.splice(0, this.appliedPromoCodes.length);
+    }
     this.save();
   }
 

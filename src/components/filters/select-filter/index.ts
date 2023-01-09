@@ -1,3 +1,5 @@
+import './style.scss';
+
 import FilterTemplate from '../filter-template';
 import { SelectFiltersType } from '..';
 
@@ -30,18 +32,23 @@ class SelectFilter extends FilterTemplate {
       listItem.className = `select-filter__item ${
         item.isSelected ? 'select-filter__item_active' : ''
       }`;
+      if (item.filteredQuantity === 0) listItem.classList.add('select-filter__item_excluded');
 
       const checkbox = document.createElement('input');
+      checkbox.className = 'select-filter__checkbox';
       checkbox.type = 'checkbox';
       checkbox.id = item.id;
       checkbox.checked = item.isSelected;
       checkbox.onchange = (event) => filterHandler(event, this.filterId);
 
       const label = document.createElement('label');
+      label.className = 'select-filter__label';
       const labelText = document.createElement('span');
+      labelText.className = 'select-filter__text';
       labelText.textContent = item.id;
 
       const quantity = document.createElement('span');
+      quantity.className = 'select-filter__quantity';
       quantity.innerText = `${item.filteredQuantity}/${item.totalQuantity}`;
 
       label.append(checkbox);

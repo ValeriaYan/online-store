@@ -13,7 +13,7 @@ interface IRange {
 class RangeFilter extends FilterTemplate {
   private prefix: string;
   private filterId: RangeFiltersType;
-  private wrapper: HTMLElement;
+  private controls: HTMLElement;
   private valuesBox: HTMLElement;
   private range: IRange;
   private slider1: HTMLInputElement;
@@ -35,10 +35,10 @@ class RangeFilter extends FilterTemplate {
     this.prefix = prefix ?? '';
     this.fixedPoint = fixedPoint ?? 0;
 
-    this.wrapper = document.createElement('div');
-    this.wrapper.className = 'range-filter__wrapper';
     this.valuesBox = document.createElement('div');
     this.valuesBox.className = 'range-filter__values';
+    this.controls = document.createElement('div');
+    this.controls.className = 'range-filter__controls';
 
     this.slider1 = this.createRangeSlider(this.range.min, this.range.max, this.range.min);
     this.slider2 = this.createRangeSlider(this.range.min, this.range.max, this.range.max);
@@ -96,11 +96,16 @@ class RangeFilter extends FilterTemplate {
   }
 
   public render(): HTMLElement {
+    this.controls.append(this.slider1);
+    this.controls.append(this.slider2);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'range-filter__wrapper';
+    wrapper.append(this.valuesBox);
+    wrapper.append(this.controls);
+
     this.container.append(this.createTitle());
-    this.container.append(this.valuesBox);
-    this.container.append(this.wrapper);
-    this.wrapper.append(this.slider1);
-    this.wrapper.append(this.slider2);
+    this.container.append(wrapper);
     return this.container;
   }
 }

@@ -1,3 +1,5 @@
+import './style.scss';
+
 import ComponentTemplate from '../component-template';
 
 class SortBar extends ComponentTemplate {
@@ -46,8 +48,10 @@ class SortBar extends ComponentTemplate {
 
   private createSortSelect(): HTMLSelectElement {
     const select = document.createElement('select');
+    select.className = 'sort-bar__select';
     const optionsTitle = document.createElement('option');
     optionsTitle.textContent = 'Sort options:';
+    optionsTitle.className = 'sort-bar__title';
     optionsTitle.selected = true;
     optionsTitle.disabled = true;
     optionsTitle.value = '';
@@ -56,6 +60,7 @@ class SortBar extends ComponentTemplate {
 
     (Object.keys(this.sortOptions) as Array<keyof typeof this.sortOptions>).forEach((key) => {
       const option = document.createElement('option');
+      option.className = 'sort-bar__option';
       option.textContent = this.sortOptions[key];
       option.selected = this.currentSortOption === key;
       option.value = key;

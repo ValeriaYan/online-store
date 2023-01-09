@@ -13,6 +13,7 @@ class SortMenu extends ComponentTemplate {
   constructor(updateProductList: () => void, searchHandler: () => void) {
     super('div', 'sort-menu');
     this.foundBar = document.createElement('div');
+    this.foundBar.className = 'sort-menu__found';
     this.sortBar = new SortBar(updateProductList);
     this.searchBar = new SearchBar(searchHandler);
   }

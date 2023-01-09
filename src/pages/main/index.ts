@@ -51,7 +51,10 @@ class MainPage {
   public render(): HTMLElement {
     this.container.innerHTML = '';
     this.filtersContainer.append(this.resetFilters.render());
-    this.container.append(this.filtersContainer);
+    const aside = document.createElement('div');
+    aside.className = 'main-page__aside';
+    aside.append(this.filtersContainer);
+    this.container.append(aside);
     this.container.append(this.productsContainer);
     this.productsContainer.append(this.sortMenu.render());
     this.filtersContainer.append(this.filters.render());

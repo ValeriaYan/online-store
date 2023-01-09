@@ -147,10 +147,17 @@ class CheckoutWindow extends ComponentTemplate{
 
     private checkPhone() {
         const value = this.inputPhone.value;
+        const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
         let isValid = true;
-        if(!value.startsWith('+') || value.length < 10) {
+        if(!value.startsWith('+') || value.length < 10 ) {
             isValid = false;
         }
+
+        value.split('').forEach((item) => {
+            if(!numbers.includes(item) && item !== '+') {
+                isValid = false;
+            }
+        })
 
         this.createMessage(this.inputPhone, Error.wrongPhone, isValid);
         return isValid;
@@ -232,6 +239,13 @@ class CheckoutWindow extends ComponentTemplate{
 
     private submit(event: Event) {
         event.preventDefault();
+        this.checkName();
+        this.checkAddress();
+        this.checkPhone();
+        this.checkEmail();
+        this.checkCardNumber();
+        this.checkCardCode();
+        this.checkCardValid();
         if(!this.checkName() || !this.checkAddress() || !this.checkPhone() || !this.checkEmail() ||
         !this.checkCardNumber() || !this.checkCardCode() || !this.checkCardValid()) {
             return false;

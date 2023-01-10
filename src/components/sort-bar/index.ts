@@ -13,13 +13,13 @@ class SortBar extends ComponentTemplate {
     'discountPercentage-DESC': 'Sort by discount DESC',
   };
 
-  private currentSortOption: string;
+  private currentSortOption = '';
   private sortSelect: HTMLSelectElement;
   private updateProductList: () => void;
 
   constructor(updateProductList: () => void) {
     super('div', 'sort-bar');
-    this.currentSortOption = '';
+    this.setCurrentSortOption();
     this.sortSelect = this.createSortSelect();
     this.updateProductList = updateProductList;
   }
@@ -52,6 +52,7 @@ class SortBar extends ComponentTemplate {
     const optionsTitle = document.createElement('option');
     optionsTitle.textContent = 'Sort options:';
     optionsTitle.className = 'sort-bar__title';
+    console.log(this.currentSortOption);
     optionsTitle.selected = true;
     optionsTitle.disabled = true;
     optionsTitle.value = '';
@@ -82,7 +83,6 @@ class SortBar extends ComponentTemplate {
   }
 
   public render(): HTMLElement {
-    this.setCurrentSortOption();
     this.container.append(this.sortSelect);
     return this.container;
   }

@@ -1,0 +1,33 @@
+.product-gallery {
+  display: flex;
+}
+
+.product-gallery__slides {
+  width: 25%;
+  flex-shrink: 0;
+}
+.product-gallery__slide {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 10px;
+
+  &_active {
+    border-color: orange;
+    box-shadow: 0px 0px 3px 1px orange;
+  }
+}
+
+.product-gallery__main-slide {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    display: block;
+    border: 2px solid orange;
+    border-radius: 10px;
+  }
+}

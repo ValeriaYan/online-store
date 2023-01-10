@@ -1,0 +1,11 @@
+@import '../../styles/base/vars';
+
+.search__input {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  background: $main-bg-color;
+  color: $text-color;
+  border: 1px solid $border-color;
+  border-radius: 2rem;
+  outline: none;
+}

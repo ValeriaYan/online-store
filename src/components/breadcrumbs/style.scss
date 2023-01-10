@@ -1,0 +1,30 @@
+@import '../../styles/base/vars';
+
+.breadcrumbs {
+  width: 80%;
+  margin: 0 auto 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.breadcrumbs__link {
+  color: $text-color;
+  text-decoration: none;
+  transition: 0.3s;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.breadcrumbs__separator {
+  color: $primary-color;
+  &::after {
+    content: '>>';
+  }
+}
+
+.breadcrumbs__current {
+  color: $primary-color;
+}

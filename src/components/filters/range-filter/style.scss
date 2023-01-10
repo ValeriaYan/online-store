@@ -1,0 +1,66 @@
+@import '../../../styles/base/vars';
+
+.range-filter__wrapper {
+  padding: 15px;
+}
+
+.range-filter__values {
+  text-align: justify;
+  margin-bottom: 10px;
+  text-align: center;
+  color: $text-color;
+}
+
+.range-filter__controls {
+  padding: 15px;
+  position: relative;
+  height: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.range-filter__controls input {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  outline: none;
+  height: 4px;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+  background: $primary-color;
+}
+
+.range-filter__controls input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+  outline: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: black;
+  border: 2px solid $primary-color;
+}
+
+.range-filter__controls input::-moz-range-thumb {
+  -moz-appearance: none;
+  pointer-events: all;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: black;
+  border: 2px solid $primary-color;
+}

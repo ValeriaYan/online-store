@@ -1,0 +1,15 @@
+@import '../../styles/base/vars';
+
+.sort-bar__select {
+  padding: 0.5rem 1rem;
+  background: $main-bg-color;
+  color: $text-color;
+  border: 1px solid $border-color;
+  border-radius: 2rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.sort-bar__title {
+  text-align: center;
+}

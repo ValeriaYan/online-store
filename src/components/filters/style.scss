@@ -1,0 +1,23 @@
+@import '../../styles/base/vars';
+
+.filters {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.filter {
+  border: 1px solid $border-color;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.filter__title {
+  margin: 0;
+  padding: 0.5em;
+  font-size: 1.6rem;
+  text-align: center;
+  color: $primary-color;
+  background: black;
+  border-bottom: 1px solid $border-color;
+}

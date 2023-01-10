@@ -1,0 +1,41 @@
+@import '../../styles/base/vars';
+
+.footer {
+  margin-top: auto;
+  padding-top: 20px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  transition: 0.3s;
+  color: $text-color;
+
+  &:hover {
+    color: $primary-color;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 1rem;
+    background: url(./github-icon.svg) center/contain no-repeat;
+  }
+}
+
+.footer__school-link {
+  flex-shrink: 0;
+  display: block;
+  width: 100px;
+  height: 50px;
+  text-decoration: none;
+  background: url(./rsschool-logo.svg) center/contain no-repeat;
+}

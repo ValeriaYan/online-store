@@ -1,0 +1,23 @@
+@import '../../styles/base/vars';
+
+.main-page {
+  display: flex;
+}
+
+.main-page__aside {
+  position: relative;
+  margin-right: 15px;
+}
+
+.main-page__filters {
+  position: sticky;
+  top: 80px;
+  flex-shrink: 0;
+  padding: 0 15px;
+  border: 1px solid $border-color;
+  border-radius: 15px;
+}
+
+.main-page__products {
+  flex-grow: 1;
+}
